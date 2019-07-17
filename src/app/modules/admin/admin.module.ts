@@ -3,8 +3,10 @@ import {RouterModule} from '@angular/router';
 
 import {SharedModule} from '../shared.module';
 import {StaffsComponent} from '@app/components/md-admin';
+import {AdminModuleComponent} from '@app/modules/admin/admin.component';
 
 const COMPONENTS = [
+  AdminModuleComponent,
   StaffsComponent
 ];
 
@@ -12,8 +14,14 @@ const COMPONENTS = [
   imports: [
     SharedModule,
     RouterModule.forChild([
-      {path: '', redirectTo: 'staffs', pathMatch: 'full'},
-      {path: 'staffs', component: StaffsComponent}
+      {
+        path: '',
+        component: AdminModuleComponent,
+        children: [
+          {path: '', redirectTo: 'staffs', pathMatch: 'full'},
+          {path: 'staffs', component: StaffsComponent}
+        ]
+      }
     ])
   ],
   declarations: [

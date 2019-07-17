@@ -1,0 +1,10 @@
+.title {
+  font-size: 18px;
+  span:not(.current) {
+    color: #4e555b;
+  }
+}
+
+.material-icons {
+  vertical-align: middle;
+}

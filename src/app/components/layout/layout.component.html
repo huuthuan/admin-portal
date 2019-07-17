@@ -1,0 +1,19 @@
+<ng-template #defaultHeaderTemplate>
+  <app-header></app-header>
+</ng-template>
+<ng-template #defaultSidebarTemplate>
+  <app-sidebar (onSidebarToggle)="onSidebarToggle()"></app-sidebar>
+</ng-template>
+<ng-template #defaultMainTemplate>
+  <main>
+    <div class="content-wrapper">
+      <div class="container-fluid mb-3">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
+</ng-template>
+
+<ng-container [ngTemplateOutlet]="headerTemplate ? headerTemplate: defaultHeaderTemplate"></ng-container>
+<ng-container [ngTemplateOutlet]="sidebarTemplate ? sidebarTemplate: defaultSidebarTemplate"></ng-container>
+<ng-container [ngTemplateOutlet]="mainTemplate ? mainTemplate: defaultMainTemplate"></ng-container>

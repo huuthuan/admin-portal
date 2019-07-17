@@ -5,6 +5,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DevExtremeModule} from 'devextreme-angular';
 
 import {ErrorComponent} from '@app/components/error/error.component';
+import {HeaderComponent} from '@app/components/header/header.component';
+import {SidebarComponent} from '@app/components/sidebar/sidebar.component';
+import {LayoutComponent} from '@app/components/layout/layout.component';
 
 const BASE_MODULES = [
   CommonModule,
@@ -15,7 +18,10 @@ const BASE_MODULES = [
 ];
 
 const COMPONENTS = [
-  ErrorComponent
+  ErrorComponent,
+  LayoutComponent,
+  HeaderComponent,
+  SidebarComponent
 ];
 
 const DIRECTIVES = [];
