@@ -10,7 +10,7 @@
             <dx-validation-group>
               <div class="field mt-3">
                 <div class="label">First name</div>
-                <dx-text-box valueChangeEvent="keyup" [(value)]="register.firstName">
+                <dx-text-box valueChangeEvent="keyup" [(value)]="user.firstName">
                   <dx-validator>
                     <dxi-validation-rule type="required" message="Full name is required.">
                     </dxi-validation-rule>
@@ -19,7 +19,7 @@
               </div>
               <div class="field mt-3">
                 <div class="label">Last name</div>
-                <dx-text-box valueChangeEvent="keyup" [(value)]="register.lastName">
+                <dx-text-box valueChangeEvent="keyup" [(value)]="user.lastName">
                   <dx-validator>
                     <dxi-validation-rule type="required" message="Full name is required.">
                     </dxi-validation-rule>
@@ -28,7 +28,7 @@
               </div>
               <div class="field mt-3">
                 <div class="label">User name</div>
-                <dx-text-box valueChangeEvent="keyup" [(value)]="register.username">
+                <dx-text-box valueChangeEvent="keyup" [(value)]="user.username">
                   <dx-validator>
                     <dxi-validation-rule type="required"
                                          message="Password is required"></dxi-validation-rule>
@@ -37,7 +37,7 @@
               </div>
               <div class="field mt-3">
                 <div class="label">Password</div>
-                <dx-text-box valueChangeEvent="keyup" [(value)]="register.password" mode="password">
+                <dx-text-box valueChangeEvent="keyup" [(value)]="user.password" mode="password">
                   <dx-validator>
                     <dxi-validation-rule type="required"
                                          message="Username is required"></dxi-validation-rule>

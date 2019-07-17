@@ -4,14 +4,18 @@
   password: string;
   firstName: string;
   lastName: string;
-  token: string;
+  token?: string;
+
+  constructor(init?: Partial<User>) {
+    Object.assign(this, init);
+  }
 }
 
 export class UserLoginInput {
   username: string;
   password: string;
 
-  public constructor(init?: Partial<UserLoginInput>) {
+  constructor(init?: Partial<UserLoginInput>) {
     Object.assign(this, init);
   }
 }

@@ -1,10 +1,11 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
-import {AlertService, AuthenticationService} from '@app/services';
-import {UserLoginInput} from '../../../models';
+import {Notify} from '@app/utils';
+import {AuthenticationService} from '@app/services';
+import {UserLoginInput} from '@app/models';
 
 @Component({
   selector: 'app-login',
@@ -13,22 +14,21 @@ import {UserLoginInput} from '../../../models';
 })
 export class LoginComponent implements OnInit {
   user: UserLoginInput = new UserLoginInput();
-  isSubmitting: boolean = false;
+  isSubmitting = false;
   returnUrl: string;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private authenticationService: AuthenticationService,
-              private alertService: AlertService) {
-    // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
-    // get return url from route parameters or default to '/'
+    // Redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+    // Get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
@@ -36,17 +36,14 @@ export class LoginComponent implements OnInit {
     if (!e.validationGroup.validate().isValid) {
       return false;
     }
-    debugger
     this.isSubmitting = true;
     this.authenticationService.login(this.user.username, this.user.password)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.alertService.error(error);
-          this.isSubmitting = false;
-        });
+      .subscribe((data) => {
+        this.router.navigate([this.returnUrl]);
+      }, (error) => {
+        Notify.notifyError(error);
+        this.isSubmitting = false;
+      });
   }
 }

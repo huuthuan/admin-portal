@@ -8,7 +8,7 @@ import {JwtInterceptor, ErrorInterceptor, fakeBackendProvider} from './utils';
 
 import {AuthGuard} from '@app/guards';
 import {SharedModule} from '@app/modules/shared.module';
-import {AuthenticationService, UserService, AlertService} from '@app/services';
+import {AuthenticationService, StaffService, AlertService} from '@app/services';
 import {AppComponent} from './app.component';
 import {routing} from './app.routing';
 
@@ -18,7 +18,7 @@ const GUARDS = [
 
 const SERVICES = [
   AuthenticationService,
-  UserService,
+  StaffService,
   AlertService
 ];
 

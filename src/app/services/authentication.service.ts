@@ -7,21 +7,24 @@ import {map} from 'rxjs/operators';
 import {environment} from '@environments/environment';
 import {User} from '@app/models';
 
-@Injectable({providedIn: 'root'})
+export const TOKEN_KEY = 'currentUser';
+export const USERS_STORAGE = 'users';
+
+@Injectable()
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(
+    JSON.parse(localStorage.getItem(TOKEN_KEY))
+  );
+  public currentUser: Observable<User> = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
 
-  redirectToPanel(params?: object) {
+  redirectToPortal(params?: object) {
     if (this.currentUserValue) {
       this.router.navigate(['/admin']);
     } else {
@@ -30,12 +33,10 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, {username, password})
+    return this.http.post<any>(`${environment.apiUrl}/auth/authenticate`, {username, password})
       .pipe(map(user => {
-        // login successful if there's a jwt token in the response
         if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem(TOKEN_KEY, JSON.stringify(user));
           this.currentUserSubject.next(user);
         }
 
@@ -43,9 +44,12 @@ export class AuthenticationService {
       }));
   }
 
+  register(user: User) {
+    return this.http.post(`${environment.apiUrl}/auth/register`, user);
+  }
+
   logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem(TOKEN_KEY);
     this.currentUserSubject.next(null);
   }
 }

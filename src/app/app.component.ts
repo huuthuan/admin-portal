@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
     this.authenticationService.currentUser.subscribe((user) => {
       this.currentUser = user;
     });
-    this.authenticationService.redirectToPanel();
+    this.authenticationService.redirectToPortal();
   }
 
   logout() {

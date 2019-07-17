@@ -1,10 +1,11 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
-import {AlertService, UserService, AuthenticationService} from '@app/services';
-import {User} from '../../../models';
+import {User} from '@app/models';
+import {Notify} from '@app/utils';
+import {AuthenticationService} from '@app/services';
 
 @Component({
   selector: 'app-register',
@@ -12,23 +13,19 @@ import {User} from '../../../models';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  register: User = new User();
-  isSubmitting: boolean = false;
-  submitted = false;
+  user: User = new User();
+  isSubmitting = false;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private authenticationService: AuthenticationService,
-              private userService: UserService,
-              private alertService: AlertService) {
-    // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+              private authService: AuthenticationService) {
   }
 
   ngOnInit() {
-
+    // Redirect to home if already logged in
+    if (this.authService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
   }
 
   onSaveClick(e) {
@@ -37,16 +34,14 @@ export class RegisterComponent implements OnInit {
     }
 
     this.isSubmitting = true;
-    this.userService.register(this.register)
+    this.authService.register(this.user)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Registration successful', true);
-          this.router.navigate(['/login']);
-        },
-        error => {
-          this.alertService.error(error);
-          this.isSubmitting = false;
-        });
+      .subscribe((data) => {
+        Notify.notifySuccess('Registration successful');
+        this.router.navigate(['/login']);
+      }, (error) => {
+        Notify.notifyError(error);
+        this.isSubmitting = false;
+      });
   }
 }
