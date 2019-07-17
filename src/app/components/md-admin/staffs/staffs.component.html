@@ -1,3 +1,101 @@
-<p>
-  staffs works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 header">
+      <h4>Staff management</h4>
+      <div class="header-right">
+        <nav class="user-menu" (clickOutside)="onCloseMenu()">
+          <ul>
+            <li class="dropdown" (click)="onToggleMenu()">
+              <div class="dropdown-toggle pointer">
+                <i class="fas fa-user-circle"></i>
+                <span class="user-name"
+                      *ngIf="loggedUser">{{ loggedUser.username }}</span>
+              </div>
+              <div class="dropdown-menu dropdown-menu-right" [class.show]="isOpenMenu">
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item pointer" (click)="onLogout()">
+                  <i class="fas fa-power-off"></i> Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-10 grid-staff">
+      <div class="row mb-3">
+        <div class="col text-lg-right">
+          <dx-button class="mr-1" type="default" height="30" (onClick)="onAddStaff()">
+            <i class="fa fa-plus mr-2"></i>Add new Staff
+          </dx-button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <dx-data-grid [dataSource]="dataSource"
+                        [showBorders]="true"
+                        [showColumnLines]="true"
+                        [rowAlternationEnabled]="true"
+                        [allowColumnReordering]="true"
+                        [allowColumnResizing]="true"
+                        [columnAutoWidth]="true"
+                        [filterRow]="true"
+                        [hoverStateEnabled]="true">
+            <dxo-selection [mode]="'row'"></dxo-selection>
+            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxi-column caption="#" [allowFiltering]="false" [fixed]="true" alignment="center" width="40"
+                        cellTemplate="cellTemplateNumberOfRow">
+              <div *dxTemplate="let cellData of 'cellTemplateNumberOfRow'">
+                {{ cellData.row.rowIndex + 1 }}
+              </div>
+            </dxi-column>
+            <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+            <dxi-column dataField="first_name" caption="First name" [fixed]="true" [width]="120"
+                        [allowFiltering]="true"
+                        [allowHeaderFiltering]="true">
+            </dxi-column>
+            <dxi-column dataField="last_name" caption="Last name" [width]="150" [allowFiltering]="true"
+                        [allowHeaderFiltering]="true">
+            </dxi-column>
+            <dxi-column dataField="email" caption="Email" [allowFiltering]="true"
+                        [allowHeaderFiltering]="true">
+            </dxi-column>
+            <dxi-column dataField="gender" caption="Gender" [width]="75">
+            </dxi-column>
+            <dxi-column dataField="address" caption="Address" [allowFiltering]="true"
+                        [allowHeaderFiltering]="true" width="150">
+            </dxi-column>
+            <dxi-column dataField="id" [width]="80" caption="Action" alignment="center"
+                        cellTemplate="cellTemplateAction"
+                        [allowSorting]="false">
+              <div *dxTemplate="let cellData of 'cellTemplateAction'" class="d-flex">
+                <div class="btn-action btn-trash pointer" (click)="onEditStaffTemplate(cellData.data)">
+                  <i class="fas fa-pencil-alt" aria-hidden="true" title="Edit product"></i>
+                </div>
+                <div class="btn-action btn-trash pointer" (click)="onDeleteStaffTemplate(cellData.data)">
+                  <i class="fa fa-times" aria-hidden="true" title="Delete"></i>
+                </div>
+              </div>
+            </dxi-column>
+          </dx-data-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Detail product-->
+<div class="popup-container" *ngIf="isStaffPopup">
+  <dx-popup [title]="staffPopupTitle" [width]="600" height="auto" [(visible)]="isStaffPopup"
+            [dragEnabled]="false" class="center-popup">
+    <div *dxTemplate="let data of 'content'">
+      <app-staff-detail
+        [(staff)]="selectedStaff"
+        (onSuccess)="onSavedStaff($event)"
+        (onCancel)="onCancelStaff()">
+      </app-staff-detail>
+    </div>
+  </dx-popup>
+</div>
