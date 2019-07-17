@@ -4,6 +4,7 @@ import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DevExtremeModule} from 'devextreme-angular';
 
+import {JoinPipe} from '@app/pipies';
 import {ErrorComponent} from '@app/components/error/error.component';
 import {HeaderComponent} from '@app/components/header/header.component';
 import {SidebarComponent} from '@app/components/sidebar/sidebar.component';
@@ -26,7 +27,9 @@ const COMPONENTS = [
 
 const DIRECTIVES = [];
 
-const PIPES = [];
+const PIPES = [
+  JoinPipe
+];
 
 const THEME_PROVIDERS = [];
 
