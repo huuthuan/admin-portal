@@ -91,11 +91,7 @@
   <dx-popup [title]="staffPopupTitle" [width]="600" height="auto" [(visible)]="isStaffPopup"
             [dragEnabled]="false" class="center-popup">
     <div *dxTemplate="let data of 'content'">
-      <app-staff-detail
-        [(staff)]="selectedStaff"
-        (onSuccess)="onSavedStaff($event)"
-        (onCancel)="onCancelStaff()">
-      </app-staff-detail>
+
     </div>
   </dx-popup>
 </div>

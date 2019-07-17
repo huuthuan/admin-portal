@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
-import {StaffDetailModel} from '../../models';
 import {cloneDeep, isEqual} from 'lodash';
+
+import {Staff} from '@app/models';
 
 @Component({
   selector: 'app-staff-detail',
@@ -8,20 +9,20 @@ import {cloneDeep, isEqual} from 'lodash';
   styleUrls: ['./staff-detail.component.scss']
 })
 export class StaffDetailComponent implements OnInit {
-  private _staff: StaffDetailModel;
+  private _staff: Staff;
   @Input()
-  get staff(): StaffDetailModel {
+  get staff(): Staff {
     return this._staff;
   }
 
-  set staff(value: StaffDetailModel) {
+  set staff(value: Staff) {
     this._staff = value;
   }
 
   genderMale: boolean;
   genderFemale: boolean;
-  editing_Staff: StaffDetailModel;
-  isSubmitting: boolean = false;
+  editingStaff: Staff;
+  isSubmitting = false;
 
   @Output() onSuccess = new EventEmitter();
   @Output() onCancel = new EventEmitter();
@@ -30,11 +31,11 @@ export class StaffDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.editing_Staff = cloneDeep(this.staff);
-     if (this.editing_Staff.gender === 'Male') {
+    this.editingStaff = cloneDeep(this.staff);
+     if (this.editingStaff.gender === 'Male') {
       this.genderMale = true;
     } else {
-      if (this.editing_Staff.gender === 'Female') {
+      if (this.editingStaff.gender === 'Female') {
         this.genderFemale = true;
       }
     }
@@ -77,6 +78,6 @@ export class StaffDetailComponent implements OnInit {
   }
 
   get isFormDirty() {
-    return !isEqual(this.editing_Staff, this.staff);
+    return !isEqual(this.editingStaff, this.staff);
   }
 }

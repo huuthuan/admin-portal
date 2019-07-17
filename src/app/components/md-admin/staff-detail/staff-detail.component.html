@@ -2,7 +2,7 @@
   <div class="row d-flex align-items-center mt-3">
     <div class="col text-lg-left">
       <div class="label text-left mb-3">First name:</div>
-      <dx-text-box [(value)]="editing_Staff.first_name">
+      <dx-text-box [(value)]="editingStaff.first_name">
         <dx-validator>
           <dxi-validation-rule type="required"
                                message="Username is required"></dxi-validation-rule>
@@ -11,7 +11,7 @@
     </div>
     <div class="col text-lg-right">
       <div class="label text-left mb-3">Last name:</div>
-      <dx-text-box [(value)]="editing_Staff.last_name">
+      <dx-text-box [(value)]="editingStaff.last_name">
         <dx-validator>
           <dxi-validation-rule type="required"
                                message="Username is required"></dxi-validation-rule>
@@ -21,7 +21,7 @@
   </div>
   <div class="field mt-3">
     <div class="label mb-3">Email:</div>
-    <dx-text-box valueChangeEvent="keyup" [(value)]="editing_Staff.email">
+    <dx-text-box valueChangeEvent="keyup" [(value)]="editingStaff.email">
       <dx-validator>
         <dxi-validation-rule type="required" message="Email is required.">
         </dxi-validation-rule>
@@ -47,7 +47,7 @@
   </div>
   <div class="field mt-3">
     <div class="label mb-3">Address:</div>
-    <dx-text-box [(value)]="editing_Staff.address">
+    <dx-text-box [(value)]="editingStaff.address">
       <dx-validator>
         <dxi-validation-rule type="required"
                              message="Password is required"></dxi-validation-rule>

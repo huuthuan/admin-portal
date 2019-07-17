@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {first} from 'rxjs/operators';
+
 import {Staff} from '@app/models';
 import {StaffService} from '@app/services';
 
@@ -9,10 +11,10 @@ import {StaffService} from '@app/services';
 })
 export class StaffsComponent implements OnInit {
   dataSource: Staff[] = [];
-  isStaffPopup: boolean = false;
+  isStaffPopup = false;
   staffPopupTitle = 'New Insurance';
   selectedStaff: Staff;
-  isOpenMenu: boolean = false;
+  isOpenMenu = false;
 
   constructor(private staffService: StaffService) {
   }
@@ -21,8 +23,11 @@ export class StaffsComponent implements OnInit {
     this.loadStaffs();
   }
 
-  loadStaffs() {
-    this.dataSource = this.staffService.getAll();
+  private loadStaffs() {
+    this.staffService.getAll().pipe(first()).subscribe((staffs) => {
+      console.log(staffs);
+      this.dataSource = staffs;
+    });
   }
 
   onAddStaff() {
@@ -59,9 +64,4 @@ export class StaffsComponent implements OnInit {
       this.isOpenMenu = false;
     }
   }
-
-  onLogout() {
-
-  }
-
 }

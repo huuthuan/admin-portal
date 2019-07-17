@@ -26,7 +26,7 @@ export class AuthenticationService {
 
   redirectToPortal(params?: object) {
     if (this.currentUserValue) {
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/']);
     } else {
       this.router.navigate(['/login']);
     }

@@ -5,7 +5,7 @@ import {ErrorComponent} from '@app/components/error/error.component';
 
 const appRoutes: Routes = [
   {
-    path: 'admin',
+    path: '',
     loadChildren: './modules/admin/admin.module#AdminModule',
     canActivate: [AuthGuard]
   },

@@ -1,7 +1,7 @@
-﻿import { Injectable } from '@angular/core';
-import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+﻿import {Injectable} from '@angular/core';
+import {HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
+import {delay, mergeMap, materialize, dematerialize} from 'rxjs/operators';
 
 import {STAFFS_STORAGE, USERS_STORAGE} from '@app/services';
 import {DEFAULT_STAFFS, DEFAULT_USERS} from '@app/data';
@@ -10,7 +10,7 @@ import {User, Staff} from '@app/models';
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const { url, method, headers, body } = request;
+    const {url, method, headers, body} = request;
     let staffs = JSON.parse(localStorage.getItem(STAFFS_STORAGE)) || DEFAULT_STAFFS;
     let users = JSON.parse(localStorage.getItem(USERS_STORAGE)) || DEFAULT_USERS;
 
@@ -58,9 +58,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function authenticate() {
-      const { username, password } = body;
+      const {username, password} = body;
       const user = users.find(x => (x.username === username || x.email === username) && x.password === password);
-      if (!user) { return error('Username or password is incorrect'); }
+      if (!user) {
+        return error('Username or password is incorrect');
+      }
       return ok({
         id: user.id,
         username: user.username,
@@ -71,7 +73,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function getStaffs() {
-      if (!isLoggedIn()) { return unauthorized(); }
+      if (!isLoggedIn()) {
+        return unauthorized();
+      }
       return ok(staffs);
     }
 
@@ -90,14 +94,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function getStaffById() {
-      if (!isLoggedIn()) { return unauthorized(); }
+      if (!isLoggedIn()) {
+        return unauthorized();
+      }
 
       const staff = staffs.find(x => x.id === idFromUrl());
       return ok(staff);
     }
 
     function deleteStaff() {
-      if (!isLoggedIn()) { return unauthorized(); }
+      if (!isLoggedIn()) {
+        return unauthorized();
+      }
 
       staffs = staffs.filter(x => x.id !== idFromUrl());
       localStorage.setItem(STAFFS_STORAGE, JSON.stringify(staffs));
@@ -106,16 +114,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     // helper functions
 
-    function ok(body?: any) {
-      return of(new HttpResponse({ status: 200, body }));
+    function ok(body?) {
+      return of(new HttpResponse({status: 200, body}));
     }
 
     function unauthorized() {
-      return throwError({ status: 401, error: { message: 'Unauthorised' } });
+      return throwError({status: 401, error: {message: 'Unauthorised'}});
     }
 
     function error(message) {
-      return throwError({ error: { message } });
+      return throwError({error: {message}});
     }
 
     function isLoggedIn() {
