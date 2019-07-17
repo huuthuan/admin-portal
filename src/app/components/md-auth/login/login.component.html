@@ -3,9 +3,9 @@
     <div class="row justify-content-center">
       <div class="col-md-12 col-lg-10">
         <div class="login-form">
-          <div class="logo-wrap mb-5">
+          <div class="logo-wrap mb-3">
             <a [routerLink]="['/']" class="logo">
-              ENOUVO
+              <img src="/assets/images/logo.svg" alt="" width="250">
             </a>
           </div>
           <div class="form-wrap">
@@ -30,9 +30,9 @@
                   </dx-validator>
                 </dx-text-box>
               </div>
-              <div class="row d-flex align-items-center mt-5">
-                <div class="col text-lg-left mt-2">
-                  <dx-button width="150" text="Login" icon="fields" type="danger"
+              <div class="row d-flex align-items-center mt-2">
+                <div class="col text-center mt-2">
+                  <dx-button width="150" text="Login" type="danger"
                              [(disabled)]="isSubmitting"
                              (onClick)="onLogin($event)"></dx-button>
                 </div>
