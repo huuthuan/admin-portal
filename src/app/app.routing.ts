@@ -1,17 +1,24 @@
-﻿import {Routes, RouterModule} from '@angular/router';
+﻿import {Routes, ExtraOptions, RouterModule} from '@angular/router';
 
-import {HomeComponent} from './home';
-import {LoginComponent} from './login';
-import {RegisterComponent} from './register';
-import {AuthGuard} from './guards';
+import {AuthGuard} from '@app/guards';
+import {ErrorComponent} from '@app/components/error/error.component';
 
 const appRoutes: Routes = [
-  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
-
-  // otherwise redirect to home
-  {path: '**', redirectTo: ''}
+  {
+    path: 'admin',
+    loadChildren: './modules/admin/admin.module#AdminModule',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '',
+    loadChildren: './modules/auth/auth.module#AuthModule'
+  },
+  // Otherwise redirect to the error page
+  {path: '**', component: ErrorComponent}
 ];
 
-export const routing = RouterModule.forRoot(appRoutes);
+const config: ExtraOptions = {
+  useHash: false,
+};
+
+export const routing = RouterModule.forRoot(appRoutes, config);
