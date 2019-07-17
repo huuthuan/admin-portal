@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
 import {AlertService, AuthenticationService} from '@app/services';
+import {UserLoginInput} from '../../../models';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,8 @@ import {AlertService, AuthenticationService} from '@app/services';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  loading = false;
-  submitted = false;
+  user: UserLoginInput = new UserLoginInput();
+  isSubmitting: boolean = false;
   returnUrl: string;
 
   constructor(private formBuilder: FormBuilder,
@@ -28,30 +28,17 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  // convenience getter for easy access to form fields
-  get f() {
-    return this.loginForm.controls;
-  }
-
-  onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.loginForm.invalid) {
-      return;
+  onLogin(e) {
+    if (!e.validationGroup.validate().isValid) {
+      return false;
     }
-
-    this.loading = true;
-    this.authenticationService.login(this.f.username.value, this.f.password.value)
+    debugger
+    this.isSubmitting = true;
+    this.authenticationService.login(this.user.username, this.user.password)
       .pipe(first())
       .subscribe(
         data => {
@@ -59,7 +46,7 @@ export class LoginComponent implements OnInit {
         },
         error => {
           this.alertService.error(error);
-          this.loading = false;
+          this.isSubmitting = false;
         });
   }
 }
