@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DevExtremeModule} from 'devextreme-angular';
+import {ClickOutsideModule} from 'ng-click-outside';
 
 import {JoinPipe} from '@app/pipies';
 import {ErrorComponent} from '@app/components/error/error.component';
@@ -15,6 +16,7 @@ const BASE_MODULES = [
   RouterModule,
   FormsModule,
   ReactiveFormsModule,
+  ClickOutsideModule,
   DevExtremeModule
 ];
 

@@ -16,8 +16,7 @@ export class RegisterComponent implements OnInit {
   user: User = new User();
   isSubmitting = false;
 
-  constructor(private formBuilder: FormBuilder,
-              private router: Router,
+  constructor(private router: Router,
               private authService: AuthenticationService) {
   }
 

@@ -44,10 +44,10 @@
                   cellTemplate="cellTemplateAction"
                   [allowSorting]="false">
         <div *dxTemplate="let cellData of 'cellTemplateAction'" class="d-flex">
-          <div class="btn-action btn-trash pointer" (click)="onEditStaffTemplate(cellData.data)">
+          <div class="btn-action btn-trash pointer ml-1" (click)="onEditStaffTemplate(cellData.data)">
             <i class="fas fa-pencil-alt" aria-hidden="true" title="Edit product"></i>
           </div>
-          <div class="btn-action btn-trash pointer" (click)="onDeleteStaffTemplate(cellData.data)">
+          <div class="btn-action btn-trash pointer ml-4" (click)="onDeleteStaffTemplate(cellData.data)">
             <i class="fa fa-times" aria-hidden="true" title="Delete"></i>
           </div>
         </div>
@@ -62,7 +62,11 @@
   <dx-popup [title]="staffPopupTitle" [width]="600" height="auto" [(visible)]="isStaffPopup"
             [dragEnabled]="false" class="center-popup">
     <div *dxTemplate="let data of 'content'">
-
+      <app-staff-detail
+        [(staff)]="selectedStaff"
+        (onSuccess)="onSavedStaff($event)"
+        (onCancel)="onCancelStaff()">
+      </app-staff-detail>
     </div>
   </dx-popup>
 </div>

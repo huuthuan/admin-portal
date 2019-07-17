@@ -1,5 +1,12 @@
 ﻿import {Injectable} from '@angular/core';
-import {HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {
+  HttpRequest,
+  HttpResponse,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HTTP_INTERCEPTORS
+} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {delay, mergeMap, materialize, dematerialize} from 'rxjs/operators';
 
@@ -33,6 +40,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return createStaff();
         case url.match(/\/staffs\/\d+$/) && method === 'GET':
           return getStaffById();
+        case url.match(/\/staffs\/\d+$/) && method === 'PUT':
+          return updateStaff();
         case url.match(/\/staffs\/\d+$/) && method === 'DELETE':
           return deleteStaff();
         default:
@@ -66,6 +75,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       return ok({
         id: user.id,
         username: user.username,
+        email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
         token: 'fake-jwt-token'
@@ -89,6 +99,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       staff.id = staffs.length ? Math.max(...staffs.map(x => x.id)) + 1 : 1;
       staffs.push(staff);
       localStorage.setItem(STAFFS_STORAGE, JSON.stringify(staffs));
+
+      return ok();
+    }
+
+    function updateStaff() {
+      if (!isLoggedIn()) {
+        return unauthorized();
+      }
+
+      staffs = staffs.filter(x => x.id !== idFromUrl());
 
       return ok();
     }

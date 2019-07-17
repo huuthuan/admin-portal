@@ -1,9 +1,9 @@
-﻿<div class="login-wrap d-flex flex-row align-items-center">
-  <div class="container">
+﻿<div class="register-wrap d-flex flex-row align-items-center">
+  <div class="container register-container">
     <div class="row justify-content-center">
       <div class="col-md-12 col-lg-10">
-        <div class="mb-5">
-          <div class="logo-wrap mb-5 text-center register_head">
+        <div class="register-form">
+          <div class="mb-5 text-center register_head">
             Create your account
           </div>
           <div class="form-wrap">
@@ -27,6 +27,17 @@
                 </dx-text-box>
               </div>
               <div class="field mt-3">
+                <div class="label">Email</div>
+                <dx-text-box valueChangeEvent="keyup" [(value)]="user.email">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="Email is required.">
+                    </dxi-validation-rule>
+                    <dxi-validation-rule type="email" message="Invalid email">
+                    </dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+              </div>
+              <div class="field mt-3">
                 <div class="label">User name</div>
                 <dx-text-box valueChangeEvent="keyup" [(value)]="user.username">
                   <dx-validator>
@@ -45,12 +56,12 @@
                 </dx-text-box>
               </div>
               <div class="row d-flex align-items-center mt-3">
-                <div class="col text-lg-left mt-2">
+                <div class="col text-lg-right mt-2 mb-5">
                   <dx-button width="150" height="35" text="Sign up" type="danger"
                              [(disabled)]="isSubmitting"
                              (onClick)="onSaveClick($event)"></dx-button>
                 </div>
-                <div class="col text-lg-left mt-2">
+                <div class="col text-lg-left mt-2 mb-5">
                   <dx-button width="150" height="35" type="danger"
                              [(disabled)]="isSubmitting">
                     <a [routerLink]="['/login']" style="color: white">Cancel</a>

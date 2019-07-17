@@ -75,22 +75,11 @@
         }
       }
     }
-    .sell-goods {
-      float: left;
-      margin-right: 10px;
-      a {
-        color: #0c0c0c;
-        span {
-          margin-right: 2px;
-          font-weight: 500;
-          margin-left: 3px;
-        }
-        &:hover {
-
-        }
-      }
-
-    }
+  }
+}
+.btn-action {
+  i:hover {
+    color: #fb0505;
   }
 }
 

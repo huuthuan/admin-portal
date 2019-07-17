@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {first} from 'rxjs/operators';
+import {confirm} from 'devextreme/ui/dialog';
 
+import {Notify} from '@app/utils';
 import {Staff} from '@app/models';
 import {StaffService} from '@app/services';
 
@@ -14,7 +16,6 @@ export class StaffsComponent implements OnInit {
   isStaffPopup = false;
   staffPopupTitle = 'New Insurance';
   selectedStaff: Staff;
-  isOpenMenu = false;
 
   constructor(private staffService: StaffService) {
   }
@@ -48,20 +49,27 @@ export class StaffsComponent implements OnInit {
   }
 
   onDeleteStaffTemplate(staff: Staff) {
-
+    debugger
+    const message = 'Are you sure you want to delete this staff ?';
+    const title = 'Delete Template';
+    confirm(message, title).then((result) => {
+      if (result) {
+        this.staffService.delete(staff.id)
+          .subscribe(() => {
+            Notify.notifySuccess('Staff has been deleted successfully');
+            this.loadStaffs();
+          }, (error) => {
+            if (error.message) {
+              Notify.notifyError(error.message);
+            } else {
+              Notify.notifyError('An error has occurred. Please try again.');
+            }
+          });
+      }
+    });
   }
 
   onCancelStaff() {
     this.isStaffPopup = false;
-  }
-
-  onToggleMenu() {
-    this.isOpenMenu = !this.isOpenMenu;
-  }
-
-  onCloseMenu() {
-    if (this.isOpenMenu) {
-      this.isOpenMenu = false;
-    }
   }
 }

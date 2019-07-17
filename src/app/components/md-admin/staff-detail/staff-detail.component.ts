@@ -1,7 +1,11 @@
 import {Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
 import {cloneDeep, isEqual} from 'lodash';
+import {Router} from '@angular/router';
+import {first} from 'rxjs/operators';
 
+import {Notify} from '@app/utils';
 import {Staff} from '@app/models';
+import {StaffService} from '@app/services';
 
 @Component({
   selector: 'app-staff-detail',
@@ -27,12 +31,13 @@ export class StaffDetailComponent implements OnInit {
   @Output() onSuccess = new EventEmitter();
   @Output() onCancel = new EventEmitter();
 
-  constructor() {
+  constructor(private router: Router,
+              private staffService: StaffService) {
   }
 
   ngOnInit() {
     this.editingStaff = cloneDeep(this.staff);
-     if (this.editingStaff.gender === 'Male') {
+    if (this.editingStaff.gender === 'Male') {
       this.genderMale = true;
     } else {
       if (this.editingStaff.gender === 'Female') {
@@ -48,21 +53,46 @@ export class StaffDetailComponent implements OnInit {
   genderMaleChanged() {
     if (this.genderFemale) {
       this.genderFemale = !this.genderMale;
+      this.editingStaff.gender = 'Female';
     }
   }
 
   genderFemaleChanged() {
     if (this.genderMale) {
       this.genderMale = !this.genderFemale;
+      this.editingStaff.gender = 'Male';
     }
   }
 
   onAddStaff() {
-
+    this.isSubmitting = true;
+    if (this.genderMale) {
+      this.editingStaff.gender = 'Male';
+    } else if (this.genderFemale) {
+      this.editingStaff.gender = 'Female';
+    }
+    this.staffService.create(this.editingStaff)
+      .pipe(first())
+      .subscribe((data) => {
+        Notify.notifySuccess('Registration successful');
+        this.router.navigate(['/login']);
+      }, (error) => {
+        Notify.notifyError(error);
+        this.isSubmitting = false;
+      });
   }
 
   onUpdateStaff() {
-
+    this.isSubmitting = true;
+    this.staffService.update(this.editingStaff)
+      .pipe(first())
+      .subscribe((data) => {
+        Notify.notifySuccess('Registration successful');
+        this.router.navigate(['/login']);
+      }, (error) => {
+        Notify.notifyError(error);
+        this.isSubmitting = false;
+      });
   }
 
   onSaveClick(e) {
