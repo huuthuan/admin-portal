@@ -8,16 +8,20 @@
 <div class="row">
   <div class="col">
     <dx-data-grid [dataSource]="dataSource"
+                  keyExpr="id"
                   [showBorders]="true"
                   [showColumnLines]="true"
                   [rowAlternationEnabled]="true"
                   [allowColumnReordering]="true"
                   [allowColumnResizing]="true"
                   [columnAutoWidth]="true"
-                  [filterRow]="true"
                   [hoverStateEnabled]="true">
       <dxo-selection [mode]="'row'"></dxo-selection>
-      <dxo-paging [pageSize]="10"></dxo-paging>
+      <dxo-filter-row [visible]="true"></dxo-filter-row>
+      <dxo-pager [showNavigationButtons]="true" [showPageSizeSelector]="true"
+                 [showInfo]="true" [allowedPageSizes]="[10, 20, 50, 100]">
+      </dxo-pager>
+      <dxo-paging [enabled]="true" [pageSize]="20"></dxo-paging>
       <dxi-column caption="#" [allowFiltering]="false" [fixed]="true" alignment="center" width="40"
                   cellTemplate="cellTemplateNumberOfRow">
         <div *dxTemplate="let cellData of 'cellTemplateNumberOfRow'">
@@ -25,20 +29,20 @@
         </div>
       </dxi-column>
       <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
-      <dxi-column dataField="first_name" caption="First name" [fixed]="true" [width]="120"
+      <dxi-column dataField="first_name" caption="First name" [fixed]="true"
                   [allowFiltering]="true"
                   [allowHeaderFiltering]="true">
       </dxi-column>
-      <dxi-column dataField="last_name" caption="Last name" [width]="150" [allowFiltering]="true"
+      <dxi-column dataField="last_name" caption="Last name" [allowFiltering]="true"
                   [allowHeaderFiltering]="true">
       </dxi-column>
       <dxi-column dataField="email" caption="Email" [allowFiltering]="true"
                   [allowHeaderFiltering]="true">
       </dxi-column>
-      <dxi-column dataField="gender" caption="Gender" [width]="75">
+      <dxi-column dataField="gender" caption="Gender" [width]="150" alignment="center">
       </dxi-column>
       <dxi-column dataField="address" caption="Address" [allowFiltering]="true"
-                  [allowHeaderFiltering]="true" width="150">
+                  [allowHeaderFiltering]="true">
       </dxi-column>
       <dxi-column dataField="id" [width]="80" caption="Action" alignment="center"
                   cellTemplate="cellTemplateAction"

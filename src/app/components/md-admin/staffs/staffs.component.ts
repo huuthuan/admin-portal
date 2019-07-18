@@ -26,7 +26,6 @@ export class StaffsComponent implements OnInit {
 
   private loadStaffs() {
     this.staffService.getAll().pipe(first()).subscribe((staffs) => {
-      console.log(staffs);
       this.dataSource = staffs;
     });
   }
