@@ -46,6 +46,7 @@
       </dxi-column>
       <dxi-column dataField="id" [width]="80" caption="Action" alignment="center"
                   cellTemplate="cellTemplateAction"
+                  [allowFiltering]="false"
                   [allowSorting]="false">
         <div *dxTemplate="let cellData of 'cellTemplateAction'" class="d-flex">
           <div class="btn-action btn-trash pointer ml-1" (click)="onEditStaffTemplate(cellData.data)">
