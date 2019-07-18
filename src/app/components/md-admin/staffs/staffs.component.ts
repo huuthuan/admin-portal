@@ -14,7 +14,7 @@ import {StaffService} from '@app/services';
 export class StaffsComponent implements OnInit {
   dataSource: Staff[] = [];
   isStaffPopup = false;
-  staffPopupTitle = 'New Insurance';
+  staffPopupTitle: string;
   selectedStaff: Staff;
 
   constructor(private staffService: StaffService) {
@@ -49,9 +49,8 @@ export class StaffsComponent implements OnInit {
   }
 
   onDeleteStaffTemplate(staff: Staff) {
-    debugger
-    const message = 'Are you sure you want to delete this staff ?';
-    const title = 'Delete Template';
+    const message = 'Are you sure you want to delete this staff?';
+    const title = 'Delete Staff';
     confirm(message, title).then((result) => {
       if (result) {
         this.staffService.delete(staff.id)

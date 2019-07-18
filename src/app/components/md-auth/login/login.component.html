@@ -30,8 +30,8 @@
                   </dx-validator>
                 </dx-text-box>
               </div>
-              <div class="row d-flex align-items-center mt-2">
-                <div class="col text-center mt-2">
+              <div class="row d-flex align-items-center mt-3">
+                <div class="col text-center">
                   <dx-button width="150" text="Login" type="danger"
                              [(disabled)]="isSubmitting"
                              (onClick)="onLogin($event)"></dx-button>
@@ -40,7 +40,7 @@
               <div class="row mt-5">
                 <div class="col">
                   <h6>Don't have an account?
-                    <a [routerLink]="['/register/']">Register now!</a>
+                    <a [routerLink]="['/register/']">Register an account.</a>
                   </h6>
                 </div>
               </div>

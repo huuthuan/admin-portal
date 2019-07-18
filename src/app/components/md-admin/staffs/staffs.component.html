@@ -58,7 +58,7 @@
 
 
 <!--Detail product-->
-<div class="popup-container" *ngIf="isStaffPopup">
+<div class="popup-container">
   <dx-popup [title]="staffPopupTitle" [width]="600" height="auto" [(visible)]="isStaffPopup"
             [dragEnabled]="false" class="center-popup">
     <div *dxTemplate="let data of 'content'">

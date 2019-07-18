@@ -59,6 +59,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return error('Username "' + user.username + '" is already taken');
       }
 
+      if (users.find(x => x.email === user.email)) {
+        return error('Email "' + user.email + '" is already taken');
+      }
+
       user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
       users.push(user);
       localStorage.setItem(USERS_STORAGE, JSON.stringify(users));
@@ -104,12 +108,24 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function updateStaff() {
+      const staff: Staff = body;
+
       if (!isLoggedIn()) {
         return unauthorized();
       }
 
-      staffs = staffs.filter(x => x.id !== idFromUrl());
+      if (staffs.find(x => x.email === staff.email && x.id !== staff.id)) {
+        return error('Email "' + staff.email + '" is already in used');
+      }
 
+      staffs.filter(x => x.id === idFromUrl()).map((x) => {
+        x.email = staff.email;
+        x.first_name = staff.first_name;
+        x.last_name = staff.last_name;
+        x.gender = staff.gender;
+        x.address = staff.address;
+      });
+      localStorage.setItem(STAFFS_STORAGE, JSON.stringify(staffs));
       return ok();
     }
 

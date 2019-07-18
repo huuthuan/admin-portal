@@ -23,8 +23,8 @@ export class StaffDetailComponent implements OnInit {
     this._staff = value;
   }
 
-  genderMale: boolean;
-  genderFemale: boolean;
+  genderMale = true;
+  genderFemale = false;
   editingStaff: Staff;
   isSubmitting = false;
 
@@ -39,9 +39,11 @@ export class StaffDetailComponent implements OnInit {
     this.editingStaff = cloneDeep(this.staff);
     if (this.editingStaff.gender === 'Male') {
       this.genderMale = true;
+      this.genderFemale = false;
     } else {
       if (this.editingStaff.gender === 'Female') {
         this.genderFemale = true;
+        this.genderMale = false;
       }
     }
   }
@@ -74,7 +76,7 @@ export class StaffDetailComponent implements OnInit {
     this.staffService.create(this.editingStaff)
       .pipe(first())
       .subscribe((data) => {
-        Notify.notifySuccess('Registration successful');
+        Notify.notifySuccess('Staff has been added successfully');
         this.router.navigate(['/login']);
       }, (error) => {
         Notify.notifyError(error);
@@ -87,7 +89,7 @@ export class StaffDetailComponent implements OnInit {
     this.staffService.update(this.editingStaff)
       .pipe(first())
       .subscribe((data) => {
-        Notify.notifySuccess('Registration successful');
+        Notify.notifySuccess('Staff has been updated successfully');
         this.router.navigate(['/login']);
       }, (error) => {
         Notify.notifyError(error);

@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-12 col-lg-10">
         <div class="register-form">
-          <div class="mb-5 text-center register_head">
+          <div class="mb-3 text-center register_head">
             Create your account
           </div>
           <div class="form-wrap">
@@ -38,7 +38,7 @@
                 </dx-text-box>
               </div>
               <div class="field mt-3">
-                <div class="label">User name</div>
+                <div class="label">Username</div>
                 <dx-text-box valueChangeEvent="keyup" [(value)]="user.username">
                   <dx-validator>
                     <dxi-validation-rule type="required"
@@ -55,17 +55,23 @@
                   </dx-validator>
                 </dx-text-box>
               </div>
-              <div class="row d-flex align-items-center mt-3">
-                <div class="col text-lg-right mt-2 mb-5">
-                  <dx-button width="150" height="35" text="Sign up" type="danger"
+              <div class="row d-flex align-items-center mt-4 mb-3">
+                <div class="col text-lg-right">
+                  <dx-button width="150" text="Create account" type="default"
                              [(disabled)]="isSubmitting"
                              (onClick)="onSaveClick($event)"></dx-button>
                 </div>
-                <div class="col text-lg-left mt-2 mb-5">
-                  <dx-button width="150" height="35" type="danger"
-                             [(disabled)]="isSubmitting">
-                    <a [routerLink]="['/login']" style="color: white">Cancel</a>
+                <div class="col text-lg-left">
+                  <dx-button width="150" type="danger" text="Cancel"
+                             [(disabled)]="isSubmitting" (onClick)="onCancel($event)">
                   </dx-button>
+                </div>
+              </div>
+              <div class="row pt-3 pb-3">
+                <div class="col">
+                  <h6>Already have an account?
+                    <a [routerLink]="['/login']">Login now.</a>
+                  </h6>
                 </div>
               </div>
             </dx-validation-group>

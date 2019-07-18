@@ -43,4 +43,8 @@ export class RegisterComponent implements OnInit {
         this.isSubmitting = false;
       });
   }
+
+  onCancel(e) {
+    this.router.navigate(['/login']);
+  }
 }

@@ -1,7 +1,7 @@
 <dx-validation-group>
   <div class="row d-flex align-items-center mt-3">
     <div class="col text-lg-left">
-      <div class="label text-left mb-3">First name:</div>
+      <div class="label text-left">First name:</div>
       <dx-text-box [(value)]="editingStaff.first_name">
         <dx-validator>
           <dxi-validation-rule type="required"
@@ -10,7 +10,7 @@
       </dx-text-box>
     </div>
     <div class="col text-lg-right">
-      <div class="label text-left mb-3">Last name:</div>
+      <div class="label text-left">Last name:</div>
       <dx-text-box [(value)]="editingStaff.last_name">
         <dx-validator>
           <dxi-validation-rule type="required"
@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="field mt-3">
-    <div class="label mb-3">Email:</div>
+    <div class="label">Email:</div>
     <dx-text-box valueChangeEvent="keyup" [(value)]="editingStaff.email">
       <dx-validator>
         <dxi-validation-rule type="required" message="Email is required.">
@@ -46,7 +46,7 @@
     </div>
   </div>
   <div class="field mt-3">
-    <div class="label mb-3">Address:</div>
+    <div class="label">Address:</div>
     <dx-text-box [(value)]="editingStaff.address">
       <dx-validator>
         <dxi-validation-rule type="required"
@@ -54,9 +54,10 @@
       </dx-validator>
     </dx-text-box>
   </div>
-  <div class="row d-flex align-items-center mt-3 mb-5">
-    <div class="col text-lg-left mt-2">
-      <dx-button width="150" text="Sign up" type="danger"
+  <div class="row mt-4 mb-2">
+    <div class="col d-flex align-items-center justify-content-end">
+      <dx-button class="btn-cancel mr-2" text="Cancel" (onClick)="onCancelStaff()"></dx-button>
+      <dx-button width="150" text="Submit" type="danger"
                  [(disabled)]="!isFormDirty ||isSubmitting"
                  (onClick)="onSaveClick($event)"></dx-button>
     </div>
