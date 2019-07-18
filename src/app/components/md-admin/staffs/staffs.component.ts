@@ -44,6 +44,7 @@ export class StaffsComponent implements OnInit {
 
   onSavedStaff() {
     this.isStaffPopup = false;
+    this.selectedStaff = new Staff();
     this.loadStaffs();
   }
 
@@ -68,6 +69,7 @@ export class StaffsComponent implements OnInit {
   }
 
   onCancelStaff() {
+    this.selectedStaff = new Staff();
     this.isStaffPopup = false;
   }
 }
