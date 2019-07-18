@@ -19,5 +19,5 @@ ng serve
 ```
 
 2. Go to http://localhost:4200 in your browser
-3. Login with the username ``admin`` and password ``admin123`` or you can register a new account
+3. Login with the username ``admin`` or email ``admin@email.com`` and password ``admin123``. You also can register a new account
 
